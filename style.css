@@ -1,0 +1,50 @@
+.hy-13{
+    padding-top: 90px;
+}
+
+/* CSS for the hero section */
+.custom-hero {
+    /* background-image: url('./src/hero.png'); */
+    background-color: rgb(170, 206, 196);
+    
+    padding: 100px 0;
+    position: relative;
+}
+
+/* Overlay with low opacity */
+.custom-hero::after {
+    content: "";
+    background: rgba(176, 194, 189, 0.8); /* Adjust opacity (0.5 is 50% opacity) */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.custom-hero h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #000000; /* Text color */
+}
+
+.custom-hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #000000; /* Text color */
+}
+
+.custom-hero .btn-primary {
+    background-color: #ff5722;
+    border-color: #ff5722;
+    color: #fff; /* Button text color */
+}
+
+.custom-hero .btn-primary:hover {
+    background-color: #e64a19;
+    border-color: #e64a19;
+}
+
+.about-section p{
+    text-align: justify;
+}
