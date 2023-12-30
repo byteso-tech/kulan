@@ -6,6 +6,10 @@ $(document).ready(function () {
     getLastUUID();
   });
 
+  $("#addnew").on("click", function () {
+    AddNew();
+  });
+
   $list = $("#TableBody");
   // Define your API key
 
