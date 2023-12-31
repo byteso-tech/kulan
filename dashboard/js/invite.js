@@ -204,13 +204,11 @@ function addBulkInvite() {
         },
         data: JSON.stringify(body),
         success: function (data) {
-          // Handle success (you may want to accumulate successful invites)
-          console.log("Invitation successful:", data);
-          getLastUUID();
+          console.log("Done");
         },
         error: function (error) {
-          // Handle error (you may want to accumulate failed invites)
-          console.log("Error:", error);
+          console.log(error);
+          // Handle error as needed
         },
       });
     }
