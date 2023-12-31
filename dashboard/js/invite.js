@@ -1,8 +1,16 @@
 const apiKey = "14f9ad433946de6b245750045d758702231ddb26";
+let lUUID = 0;
 $(document).ready(function () {
   // Initialize DataTable
 
+  $("#bulkInvite").click(function () {
+    addBulkInvite();
+  });
+
   $("#addNewButton").on("click", function () {
+    getLastUUID();
+  });
+  $("#addBulk").on("click", function () {
     getLastUUID();
   });
 
@@ -117,7 +125,7 @@ function getLastUUID() {
     success: function (data) {
       // Handle the response here
       const lastUUIDNumber = data.lastUUIDNumber;
-
+      lUUID = lastUUIDNumber + 1;
       $("#uuid").val(lastUUIDNumber + 1);
 
       // You can perform any further actions with lastTicketNumber here
@@ -144,4 +152,78 @@ function getStatusString(num) {
     default:
       return "Unknown";
   }
+}
+
+// -----------------------------------------------------------------
+
+function addBulkInvite() {
+  const fileInput = document.getElementById("excelFile");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please select an Excel file.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: "array" });
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    const range = XLSX.utils.decode_range(worksheet["!ref"]);
+
+    // Loop through each row (starting from row 2 to skip headers)
+    for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+      const nameCell = worksheet[XLSX.utils.encode_cell({ r: rowNum, c: 0 })];
+      const emailCell = worksheet[XLSX.utils.encode_cell({ r: rowNum, c: 1 })];
+      const expDateCell =
+        worksheet[XLSX.utils.encode_cell({ r: rowNum, c: 2 })];
+
+      if (!nameCell || !emailCell || !expDateCell) continue; // Skip if any cell is missing
+
+      const name = nameCell.v;
+      const email = emailCell.v;
+      const expiration_date = expDateCell.v;
+
+      const body = {
+        uuid: lUUID,
+        name: name,
+        email: email,
+        expiration_date: expiration_date,
+        invitation_status: 1,
+      };
+
+      console.log(body);
+
+      $.ajax({
+        url: `https://bytesotech.cloud/kulan/api/invitation/`,
+        type: "POST",
+        headers: {
+          "x-api-key": apiKey,
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify(body),
+        success: function (data) {
+          // Handle success (you may want to accumulate successful invites)
+          console.log("Invitation successful:", data);
+          Swal.fire({
+            icon: "success",
+            title: "Bulk Invitations Sent",
+            text: "All invitations have been sent successfully!",
+          });
+        },
+        error: function (error) {
+          // Handle error (you may want to accumulate failed invites)
+          console.log("Error:", error);
+        },
+      });
+
+      getLastUUID();
+    }
+
+    // Swal fire success message
+    
+  };
+
+  reader.readAsArrayBuffer(file);
 }

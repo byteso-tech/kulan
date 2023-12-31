@@ -13,7 +13,7 @@
     />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="../dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="../dist/sweetalert2.min.css" />
     <!-- jQuery (CDN) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS (with Popper.js) -->
@@ -118,8 +118,6 @@
         <!-- Sidebar (4 columns) -->
         <aside class="col-md-2 col-sm-2 bg-light sticky-sidebar">
           <div id="sidebar"></div>
-
-          
         </aside>
 
         <!-- Main content (8 columns) -->
@@ -138,7 +136,12 @@
                 >
                   Single Invite <i class="fas fa-user"></i>
                 </button>
-                <button class="btn btn-info float-right py-2">
+                <button
+                id="addBulk"
+                  class="btn btn-info float-right py-2"
+                  data-toggle="modal"
+                  data-target="#exampleModal1"
+                >
                   Bulk Invite <i class="fas fa-solid fa-users"></i>
                 </button>
               </div>
@@ -182,7 +185,7 @@
     <!-- Add Bootstrap JavaScript last -->
     <script src="../dist/sweetalert2.min.js"></script>
     <script src="../dist/js/bootstrap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
     <script src="./js/invite.js"></script>
   </body>
 </html>
@@ -247,7 +250,56 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
           </button>
-          <button type="button" id="addnew"  class="btn btn-success">Invite</button>
+          <button type="button" id="addnew" class="btn btn-success">
+            Invite
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form id="bulkform">
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal1"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add ...</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="excelFile">Upload Excel File</label>
+            <input
+              type="file"
+              id="excelFile"
+              class="form-control-file"
+              accept=".xlsx, .xls"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" id="bulkInvite" class="btn btn-success">
+            Invite
+          </button>
         </div>
       </div>
     </div>
