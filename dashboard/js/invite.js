@@ -23,7 +23,7 @@ $(document).ready(function () {
 
   // Fetch ticket data from the API with the "x-api-key" header
   $.ajax({
-    url: "http://localhost:30009/api/invitation",
+    url: "https://bytesotech.cloud/kulan/api/invitation",
     type: "GET",
     headers: {
       "x-api-key": apiKey,
@@ -62,7 +62,7 @@ function formatDate(dateString) {
 
 function getTicketByID(id) {
   $.ajax({
-    url: `http://localhost:30009/api/invitation/${id}`,
+    url: `https://bytesotech.cloud/kulan/api/invitation/${id}`,
     type: "GET",
     headers: {
       "x-api-key": apiKey,
@@ -94,7 +94,7 @@ function AddNew() {
     invitation_status: 1,
   };
   $.ajax({
-    url: `http://localhost:30009/api/invitation/`,
+    url: `https://bytesotech.cloud/kulan/api/invitation/`,
     type: "POST",
     headers: {
       "x-api-key": apiKey,
@@ -117,7 +117,7 @@ function AddNew() {
 
 function getLastUUID() {
   $.ajax({
-    url: "http://localhost:30009/api/invitation/last/uuid",
+    url: "https://bytesotech.cloud/kulan/api/invitation/last/uuid",
     type: "GET",
     headers: {
       "x-api-key": apiKey,
@@ -197,7 +197,7 @@ function addBulkInvite() {
       console.log(body);
 
       $.ajax({
-        url: `http://localhost:30009/api/invitation/`,
+        url: `https://bytesotech.cloud/kulan/api/invitation/`,
         type: "POST",
         headers: {
           "x-api-key": apiKey,
