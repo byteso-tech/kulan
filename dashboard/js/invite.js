@@ -23,7 +23,7 @@ $(document).ready(function () {
 
   // Fetch ticket data from the API with the "x-api-key" header
   $.ajax({
-    url: "https://bytesotech.cloud/kulan/api/invitation",
+    url: "http://localhost:30009/api/invitation",
     type: "GET",
     headers: {
       "x-api-key": apiKey,
@@ -62,7 +62,7 @@ function formatDate(dateString) {
 
 function getTicketByID(id) {
   $.ajax({
-    url: `https://bytesotech.cloud/kulan/api/invitation/${id}`,
+    url: `http://localhost:30009/api/invitation/${id}`,
     type: "GET",
     headers: {
       "x-api-key": apiKey,
@@ -94,7 +94,7 @@ function AddNew() {
     invitation_status: 1,
   };
   $.ajax({
-    url: `https://bytesotech.cloud/kulan/api/invitation/`,
+    url: `http://localhost:30009/api/invitation/`,
     type: "POST",
     headers: {
       "x-api-key": apiKey,
@@ -117,7 +117,7 @@ function AddNew() {
 
 function getLastUUID() {
   $.ajax({
-    url: "https://bytesotech.cloud/kulan/api/invitation/last/uuid",
+    url: "http://localhost:30009/api/invitation/last/uuid",
     type: "GET",
     headers: {
       "x-api-key": apiKey,
@@ -183,8 +183,9 @@ function addBulkInvite() {
 
       const name = nameCell.v;
       const email = emailCell.v;
-      const expiration_date = expDateCell.v;
-      console.log(lUUID);
+      const expiration_date = excelDateToDate(expDateCell.v).toISOString().split('T')[0];
+
+      console.log(expiration_date);
       const body = {
         uuid: lUUID + (rowNum - 1),
         name: name,
@@ -196,7 +197,7 @@ function addBulkInvite() {
       console.log(body);
 
       $.ajax({
-        url: `https://bytesotech.cloud/kulan/api/invitation/`,
+        url: `http://localhost:30009/api/invitation/`,
         type: "POST",
         headers: {
           "x-api-key": apiKey,
@@ -222,4 +223,11 @@ function addBulkInvite() {
   };
 
   reader.readAsArrayBuffer(file);
+}
+
+
+function excelDateToDate(serial) {
+  const utc_days  = Math.floor(serial - 25569);
+  const utc_value = utc_days * 86400; 
+  return new Date(utc_value * 1000);
 }
