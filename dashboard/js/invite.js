@@ -127,7 +127,6 @@ function getLastUUID() {
       const lastUUIDNumber = data.lastUUIDNumber;
       lUUID = lastUUIDNumber + 1;
       $("#uuid").val(lastUUIDNumber + 1);
-
       // You can perform any further actions with lastTicketNumber here
     },
     error: function (error) {
@@ -180,13 +179,14 @@ function addBulkInvite() {
         worksheet[XLSX.utils.encode_cell({ r: rowNum, c: 2 })];
 
       if (!nameCell || !emailCell || !expDateCell) continue; // Skip if any cell is missing
+      // Usage
 
       const name = nameCell.v;
       const email = emailCell.v;
       const expiration_date = expDateCell.v;
-
+      console.log(lUUID);
       const body = {
-        uuid: lUUID,
+        uuid: lUUID + (rowNum - 1),
         name: name,
         email: email,
         expiration_date: expiration_date,
@@ -206,23 +206,21 @@ function addBulkInvite() {
         success: function (data) {
           // Handle success (you may want to accumulate successful invites)
           console.log("Invitation successful:", data);
-          Swal.fire({
-            icon: "success",
-            title: "Bulk Invitations Sent",
-            text: "All invitations have been sent successfully!",
-          });
+          getLastUUID();
         },
         error: function (error) {
           // Handle error (you may want to accumulate failed invites)
           console.log("Error:", error);
         },
       });
-
-      getLastUUID();
     }
 
     // Swal fire success message
-    
+    Swal.fire({
+      icon: "success",
+      title: "Bulk Invitations Sent",
+      text: "All invitations have been sent successfully!",
+    });
   };
 
   reader.readAsArrayBuffer(file);
