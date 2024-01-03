@@ -137,7 +137,7 @@
                   Single Invite <i class="fas fa-user"></i>
                 </button>
                 <button
-                id="addBulk"
+                  id="addBulk"
                   class="btn btn-info float-right py-2"
                   data-toggle="modal"
                   data-target="#exampleModal1"
@@ -299,6 +299,78 @@
           </button>
           <button type="button" id="bulkInvite" class="btn btn-success">
             Invite
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form id="update">
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal11"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update ...</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="" class="form-label">Invitation ID</label>
+            <input
+              type="text"
+              readonly
+              id="up_uuid"
+              class="form-control"
+              required
+            />
+            <input
+              type="text"
+              readonly
+              id="up_id"
+              class="form-control"
+             style="display: none;"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="" class="form-label">Guest Name</label>
+            <input type="text" id="up_name" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label for="" class="form-label">Status</label>
+            <select name="" id="up_status" class="form-control">
+              <option value="" disabled selected>Select Status</option>
+              <option value="1">Invited</option>
+              <option value="2">Attended</option>
+              <option value="3">Pending</option>
+              <option value="4">Rejected</option>
+              <option value="5">Expired</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" id="updateStatus" class="btn btn-warning">
+            update
           </button>
         </div>
       </div>

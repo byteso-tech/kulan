@@ -18,6 +18,10 @@ $(document).ready(function () {
     AddNew();
   });
 
+  $("#updateStatus").click(function () {
+    updateStatus();
+  });
+
   $list = $("#TableBody");
   // Define your API key
 
@@ -36,8 +40,9 @@ $(document).ready(function () {
         $tr.append(`<td>${idx + 1} </td>`);
         // onclick="getTicketByID(${item.Id})"
         $tr.append(
-          `<td><a href="#"  data-toggle="modal" data-target="#exampleModal1">#KUL-${item.uuid}</a></td>`
+          `<td><a href="#" onclick="fillUpdateForm(${item.id}, '${item.uuid}', '${item.name}')"  data-toggle="modal" data-target="#exampleModal11">#KUL-${item.uuid}</a></td>`
         );
+        
         $tr.append("<td>" + item.name + "</td>");
         $tr.append("<td>" + item.email + "</td>");
         $tr.append("<td>" + getStatusString(item.invitation_status) + "</td>");
@@ -60,23 +65,36 @@ function formatDate(dateString) {
   return parts[0];
 }
 
-function getTicketByID(id) {
+function fillUpdateForm(id,uID,name) {
+  $("#up_id").val(id);
+  $("#up_uuid").val(uID);
+  $("#up_name").val(name);
+  
+}
+
+function updateStatus() {
+  thisID = $("#up_id").val();
+  let body = {
+    invitation_status: parseInt($("#up_status").val()),
+  };
   $.ajax({
-    url: `https://bytesotech.cloud/kulan/api/invitation/${id}`,
-    type: "GET",
+    url: `https://bytesotech.cloud/kulan/api/invitation/${thisID}`,
+    type: "PUT",
     headers: {
       "x-api-key": apiKey,
+      "Content-Type": "application/json",
     },
+    data: JSON.stringify(body),
     success: function (data1) {
       // Update the DataTable with the retrieved data
-      data = JSON.parse(data1);
+      Swal.fire({
+        icon: "success",
+        title: "Updated",
+        text: "Your request was successful!",
+      });
+      
 
-      $("#t_id").val(data.ticket_number);
-      $("#t_name").val(data.ticket_name);
-      $("#t_client").val(data.ticket_client);
-      $("#t_status").val(data.ticket_status);
-      $("#t_date").val(data.ticket_date);
-      $("#t_desc").val(data.ticket_description);
+      
     },
     error: function (error) {
       console.log(error);
